@@ -1,0 +1,42 @@
+<h1>NMR Prediction</h1>
+
+
+
+<%= form_tag("/query/result", method: 'get') do %>
+
+  <td style="vertical-align:top; padding-left:100px;padding-top:10px;">
+    <div style="font-size:13px; font-size:12;color: #006666;">
+      <%= label_tag(:q, "SMILES Search") %>
+      <br/><br/>
+    </div>
+    <table cellspacing="0" cols="3" cellpadding="0" id="table_two">
+      <tr style="padding-bottom:20px;">
+        <td>
+          <%= text_area_tag(:q) %>
+          <tr>
+            <td align="center">
+              <br/>
+              <%= submit_tag("Fetch Compounds") %>      
+            </td>
+          </tr>
+        </td>
+      </tr>
+    </table>
+  </td>
+  <br>
+
+  <td>
+    <div id="structure-query-file">
+      <br>
+      <%= label_tag(:sdf_file, "SDF File") %> <%= file_field :fstruc, as: :file %>
+      <br>
+    </div>
+  </td>
+  <td>
+  	<br>
+  		<%= submit_tag("run sample test", name: 'test_sample') %>
+  	<br>
+  </td>
+
+
+<% end %>
