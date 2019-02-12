@@ -10,7 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_31_051208) do
+ActiveRecord::Schema.define(version: 2019_02_06_215827) do
+
+  create_table "input_models", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "smiles"
+    t.string "sdf_file_string"
+    t.string "avatar"
+  end
 
   create_table "shifts", force: :cascade do |t|
     t.datetime "created_at", null: false

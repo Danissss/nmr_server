@@ -126,7 +126,7 @@ def main():
 
 	try:
 		argument_1 = sys.argv[1]
-		shift = argument_1.split(",")
+		shift = argument_1.split(";")
 	except:
 		print("Empty input")
 		sys.exit(0)

@@ -1,42 +1,73 @@
+<script src="/marvin4js/gui/lib/promise-1.0.0.min.js"></script>
+<script src="/marvin4js/js/marvinjslauncher.js"></script>
+
+
 <h1>NMR Prediction</h1>
 
 
+<%= form_for @inputmodel, url:"/query/result", method: :post  do |f| %>
+  <p>
+    <%= f.label :SMILES %>
+    <br>
+    <%= f.text_area :smiles %>
+  </p>
+  <p>
+    <%= f.file_field :file %>
+  </p>
 
-<%= form_tag("/query/result", method: 'get') do %>
+  <p><%= f.submit "Run NMR Prediction"%></p>
+<% end %>
 
-  <td style="vertical-align:top; padding-left:100px;padding-top:10px;">
-    <div style="font-size:13px; font-size:12;color: #006666;">
-      <%= label_tag(:q, "SMILES Search") %>
-      <br/><br/>
-    </div>
-    <table cellspacing="0" cols="3" cellpadding="0" id="table_two">
-      <tr style="padding-bottom:20px;">
-        <td>
-          <%= text_area_tag(:q) %>
-          <tr>
-            <td align="center">
-              <br/>
-              <%= submit_tag("Fetch Compounds") %>      
-            </td>
-          </tr>
-        </td>
-      </tr>
-    </table>
+
+
+
+
+<%= form_tag("/query/result", method: 'post') do |form| %>
   </td>
-  <br>
-
-  <td>
-    <div id="structure-query-file">
-      <br>
-      <%= label_tag(:sdf_file, "SDF File") %> <%= file_field :fstruc, as: :file %>
-      <br>
-    </div>
-  </td>
-  <td>
   	<br>
   		<%= submit_tag("run sample test", name: 'test_sample') %>
   	<br>
   </td>
-
-
 <% end %>
+
+
+
+<%= form_tag("/query/result", method: 'post') do |form| %>
+  </td>
+    <br>
+      <div>
+        <iframe src="/marvin4js/editor.html" id="sketch" width="618px" height="474px" style="border:1px solid #b3b3b3;" ></iframe>
+      </div>
+
+      <%= text_area_tag(:sdf_content, :text, :style => "display:none;") %>
+      <%= submit_tag("Run NMR Prediction", name: 'sketch', onclick: "get_sdf_content()") %>
+    <br>
+  </td>
+<% end %>
+
+
+
+<script>
+  var marvinSketcherInstance;
+
+  MarvinJSUtil.getEditor("#sketch").then(function(sketcherInstance) {
+    marvinSketcherInstance = sketcherInstance;
+  }, function(error) {
+    alert("Loading of the sketcher failed"+error);
+  });  
+
+  
+
+  function get_sdf_content(){
+    exportPromise = marvinSketcherInstance.exportStructure('mol');
+    exportPromise.then(function(result){
+      console.log(result);
+      $('[name="sdf_content"]').val(result);
+    });
+  }
+  
+
+
+
+</script>
+
